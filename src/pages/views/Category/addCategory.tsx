@@ -11,7 +11,7 @@ const AddCategoryView = () => {
     const data = {
       name: event.target.name.value,
     };
-    const result = await fetch("http://127.0.0.1:3000/api/category", {
+    const result = await fetch("http://127.0.0.1:3000/api/categories", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

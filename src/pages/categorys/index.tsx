@@ -14,7 +14,7 @@ export default CategoryPage;
 
 export async function getServerSideProps() {
     // fetch data 
-    const res = await fetch('http://127.0.0.1:3000/api/category');
+    const res = await fetch('http://127.0.0.1:3000/api/categories');
     const response  = await res.json();
 
     return {

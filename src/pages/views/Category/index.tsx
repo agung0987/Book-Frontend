@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import AddCategoryView from "./addCategory";
 import DeleteCategoryView from "./deleteCategory";
+import UpdateCategoryView from "./updateCategory";
 
 const CategoryView = ({ category }: { category: CategoryType[] }) => {
   return (
@@ -24,7 +25,10 @@ const CategoryView = ({ category }: { category: CategoryType[] }) => {
                   {category.name}
                 </td>
                 <td>
-                <DeleteCategoryView category = {category} />
+                  <div className="mr-0">
+                    <UpdateCategoryView category={category} />
+                  </div>
+                  <DeleteCategoryView category={category} />
                 </td>
               </tr>
             ))}

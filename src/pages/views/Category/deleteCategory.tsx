@@ -8,11 +8,11 @@ const DeleteCategoryView = ({ category }: { category: CategoryType }) => {
 
   const router = useRouter();
 
-  const handleDelete = async (categoryId: any) => {
+  const handleDelete = async (categoryId: number) => {
     setIsMutating(true);
 
     const result = await fetch(
-      `http://127.0.0.1:3000/api/category/${categoryId}`,
+      `http://127.0.0.1:3000/api/categories/${categoryId}`,
       {
         method: "DELETE",
       }
