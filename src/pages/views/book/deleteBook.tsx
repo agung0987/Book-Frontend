@@ -1,18 +1,18 @@
-import { CategoryType } from "@/types/category.type";
+import { BooksType } from "@/types/books.type";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const DeleteBookView = ({ category }: { category: CategoryType }) => {
+const DeleteBookView = ({ book }: { book: BooksType }) => {
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
   const router = useRouter();
 
-  const handleDelete = async (categoryId: number) => {
+  const handleDelete = async (bookId: number) => {
     setIsMutating(true);
 
     const result = await fetch(
-      `http://127.0.0.1:3000/api/book/${categoryId}`,
+      `http://127.0.0.1:3000/api/books/${bookId}`,
       {
         method: "DELETE",
       }
@@ -45,13 +45,13 @@ const DeleteBookView = ({ category }: { category: CategoryType }) => {
           >
             ✕
           </button>
-          <h3 className="font-bold text-lg">Are sure to delete {category.name}</h3>
+          <h3 className="font-bold text-lg">Are sure to delete {book.title}</h3>
           <div className="flex items-center justify-between mt-3">
             {!isMutating ? (
               <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
-              onClick={() => handleDelete(category.id)}
+              onClick={() => handleDelete(book.id)}
             >
               Delete
             </button>

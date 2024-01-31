@@ -1,5 +1,7 @@
 import { BooksType } from "@/types/books.type";
 import AddBookView from "./addBook";
+import UpdateBookView from "./updateCategory";
+import DeleteBookView from "./deleteBook";
 
 const BooksView = ({ books }: { books: BooksType[] }) => {
   return (
@@ -53,13 +55,13 @@ const BooksView = ({ books }: { books: BooksType[] }) => {
                   {book.thickness}
                 </td>
                 <td className="border border-slate-700 text-black">
-                  {book.category_id}
+                  {book.category.name}
                 </td>
                 <td>
                   <div className="mr-0">
-                    {/* <UpdateCategoryView category={category} /> */}
+                    <UpdateBookView book={book}/>
                   </div>
-                  {/* <DeleteCategoryView category={category} /> */}
+                  <DeleteBookView book={book}/>
                 </td>
               </tr>
             ))}

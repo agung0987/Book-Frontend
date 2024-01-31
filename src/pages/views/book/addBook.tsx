@@ -1,16 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { CategoryType } from "@/types/category.type";
 
 const AddBookView = () => {
+  const [options, setOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState();
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
-
   const router = useRouter();
+
+  useEffect(() => {
+    setTimeout(() => {fetchOptions();}, 3000);
+  }, []);
+
+  const fetchOptions = async () => {
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:3000/api/categories"
+      ); 
+      const data = await response.json();
+      setOptions(data.data);
+    } catch (error) {
+      console.error("Error fetching options:", error);
+    }
+  };
+  const handleOptionChange = (event :any) => {
+    const selectedValue = event.target.value;
+    setSelectedOption(selectedValue); 
+  };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setIsMutating(true);
-    console.log(event.target.title.value);
+
     const data = {
       title: event.target.title.value,
       description: event.target.description.value,
@@ -20,7 +42,7 @@ const AddBookView = () => {
       total_page: event.target.total_page.value,
       category_id: event.target.category_id.value,
     };
-    console.log(data);
+
     const result = await fetch("http://127.0.0.1:3000/api/books", {
       method: "POST",
       headers: {
@@ -35,13 +57,14 @@ const AddBookView = () => {
       setModal(false);
     }
   };
+
   function handleChange() {
     setModal(!modal);
   }
   return (
     <div>
       <button className="btn" onClick={handleChange}>
-        ADD
+        Add
       </button>
       <input
         type="checkbox"
@@ -51,14 +74,13 @@ const AddBookView = () => {
       />
       <dialog id="modal" className="modal">
         <div className="modal-box">
-            <button
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              onClick={handleChange}
-            >
-              ✕
-            </button>
+          <button
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            onClick={handleChange}
+          >
+            ✕
+          </button>
           <form method="dialog" onSubmit={handleSubmit}>
-
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -79,7 +101,7 @@ const AddBookView = () => {
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="description"
               >
-                Description 
+                Description
               </label>
               <input
                 type="text"
@@ -94,7 +116,7 @@ const AddBookView = () => {
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="image"
               >
-                Image 
+                Image
               </label>
               <input
                 type="text"
@@ -109,7 +131,7 @@ const AddBookView = () => {
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="release_year"
               >
-                Release Year 
+                Release Year
               </label>
               <input
                 type="number"
@@ -124,7 +146,7 @@ const AddBookView = () => {
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="price"
               >
-                Price 
+                Price
               </label>
               <input
                 type="text"
@@ -139,7 +161,7 @@ const AddBookView = () => {
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="total_page"
               >
-                Total Page 
+                Total Page
               </label>
               <input
                 type="number"
@@ -154,31 +176,38 @@ const AddBookView = () => {
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="category_id "
               >
-                Category  
+                Category
               </label>
-              <input
-                type="number"
+              <select
+                className="select select-bordered w-full "
                 id="category_id"
                 name="category_id "
-                placeholder="Category"
-                className="shadow appearance-none placeholder:bg-white bg-white border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
+                value={selectedOption} 
+                onChange={handleOptionChange}
+              >
+                <option disabled selected>
+                  Pilih Category
+                </option>
+                {options.map((option : CategoryType) => (
+                <option key={option.id} value={option.id}>
+                  {option.name}
+                </option>
+              ))}
+              </select>
             </div>
             <div className="flex items-center justify-between">
-            {!isMutating ? (
+              {!isMutating ? (
                 <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Save
-              </button>
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Save
+                </button>
               ) : (
                 <button type="button" className="btn loading">
                   Saving...
                 </button>
               )}
-
-              
             </div>
           </form>
         </div>

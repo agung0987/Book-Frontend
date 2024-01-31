@@ -77,9 +77,7 @@ const AddCategoryView = () => {
                 <button type="button" className="btn loading">
                   Saving...
                 </button>
-              )}
-
-              
+              )}  
             </div>
           </form>
         </div>

@@ -1,5 +1,5 @@
 import { CategoryType } from "@/types/category.type";
-import ShowCategoryView from "../views/Category/show";
+import ShowCategoryView from "../views/Category/showCategory";
 
 const DetailCategoryPage = ({category}:{category:CategoryType}) => {
     return(

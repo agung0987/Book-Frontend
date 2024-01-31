@@ -9,7 +9,7 @@ const Navbar = () => {
           <Link className="mr-3 text-white cursor-pointer" href="/categorys">
             Category
           </Link>
-          <Link className="mr-3 text-white cursor-pointer" href="/book">
+          <Link className="mr-3 text-white cursor-pointer" href="/books">
             Book
           </Link>
         </ul>
