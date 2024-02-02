@@ -1,6 +1,6 @@
 import { BooksType } from "@/types/books.type";
 import AddBookView from "./addBook";
-import UpdateBookView from "./updateCategory";
+import UpdateBookView from "./updateBook";
 import DeleteBookView from "./deleteBook";
 import { useEffect } from "react";
 import { useBook } from "@/store/book/crudBook";

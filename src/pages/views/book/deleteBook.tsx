@@ -46,7 +46,7 @@ const DeleteBookView = ({ book }: { book: BooksType }) => {
           >
             ✕
           </button>
-          <h3 className="font-bold text-lg">Are sure to delete {book.title}</h3>
+          <h3 className="font-bold text-lg">Do you want to delete?</h3>
           <div className="flex items-center justify-between mt-3">
             {!isMutating ? (
               <button

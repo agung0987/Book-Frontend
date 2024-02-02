@@ -5,7 +5,7 @@ import { useCategories } from "@/store/categorys/crud";
 
 const UpdateCategoryView = ({ category }: { category: CategoryType }) => {
   const { updateData } = useCategories();
-  const [name, setName] = useState(category.name);
+  const [name, setName] = useState(category?.name);
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
@@ -13,10 +13,9 @@ const UpdateCategoryView = ({ category }: { category: CategoryType }) => {
 
   const handleUpdate = async (event: any) => {
     event.preventDefault();
-
     setIsMutating(true);
-    const data = {
-      name: event.target.name.value,
+    const data : { name: string }= {
+      name: name,
     };
     
     await updateData(category.id, data);

@@ -6,12 +6,12 @@ import { useBook } from "@/store/book/crudBook";
 import { useCategories } from "@/store/categorys/crud";
 
 const UpdateBookView = ({ book }: { book: BooksType }) => {
-  const [title, setTitle] = useState(book.title);
-  const [description, setDescription] = useState(book.description);
-  const [image, setImage] = useState(book.image_url);
-  const [year, setYear] = useState(book.release_year || '' );
-  const [price, setPrice] = useState(book.price);
-  const [totalPage, setTotalPage] = useState(book.total_page ||'');
+  const [title, setTitle] = useState(book?.title);
+  const [description, setDescription] = useState(book?.description);
+  const [image, setImage] = useState(book?.image_url);
+  const [year, setYear] = useState(book?.release_year || '' );
+  const [price, setPrice] = useState(book?.price);
+  const [totalPage, setTotalPage] = useState(book?.total_page ||'');
   const [modal, setModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState();
   const [isMutating, setIsMutating] = useState(false);
@@ -203,8 +203,8 @@ const UpdateBookView = ({ book }: { book: BooksType }) => {
                 value={selectedOption} 
                 onChange={handleOptionChange}
               >
-                <option value={book.category.id}  selected>
-                  {book.category.name}
+                <option value={book?.category.id}  selected>
+                  {book?.category.name}
                 </option>
                 {categories.map((option : CategoryType) => (
                 <option key={option.id} value={option.id}>

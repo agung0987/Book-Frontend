@@ -48,7 +48,7 @@ const DeleteCategoryView = ({ category }: { category: CategoryType }) => {
             ✕
           </button>
           <h3 className="font-bold text-lg">
-            Are sure to delete {category.name}
+             Do you want to delete?
           </h3>
           <div className="flex items-center justify-between mt-3">
             {!isMutating ? (
