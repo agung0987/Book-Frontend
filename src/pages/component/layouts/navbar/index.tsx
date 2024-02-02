@@ -2,7 +2,6 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import { useAuth } from "@/store/auth/authState";
 
-
 const Navbar = () => {
   const {logout} = useAuth();
   const logoutHanlder = async () => {   

@@ -4,7 +4,6 @@ import DeleteCategoryView from "./deleteCategory";
 import UpdateCategoryView from "./updateCategory";
 import { useCategories } from "@/store/categorys/crud";
 import { useEffect } from "react";
-import CategoryIdBook from "@/pages/categorys/[CategoryIdBook]";
 import Link from "next/link";
 
 const CategoryView = () => {

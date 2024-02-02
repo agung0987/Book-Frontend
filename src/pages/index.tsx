@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Router from "next/router";
 import Cookies from "js-cookie";
 import { useAuth } from "@/store/auth/authState";

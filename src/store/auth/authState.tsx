@@ -2,7 +2,6 @@ import axios from "axios";
 import Router from "next/router";
 import { create } from "zustand";
 import Cookies from "js-cookie";
-import { UsersType } from "@/types/users.type";
 
 interface Users {
     logout: (token: any) => Promise<void>;
