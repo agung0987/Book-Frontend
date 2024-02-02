@@ -1,39 +1,34 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useCategories } from "@/store/categorys/crud";
 
 const AddCategoryView = () => {
+  const {addData} = useCategories();
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
   const router = useRouter();
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setIsMutating(true);
-    const data = {
+    const data  = {
       name: event.target.name.value,
     };
-    const result = await fetch("http://127.0.0.1:3000/api/categories", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (result.status === 200) {
+    try {
+      await addData(data);
+    } catch (error) {
+      console.error('Error adding data:', error);
+    }
       setIsMutating(false);
       event.target.reset();
       router.refresh();
       setModal(false);
-    }
   };
   function handleChange() {
     setModal(!modal);
   }
   return (
     <div>
-      <button className="btn" onClick={handleChange}>
-        {" "}
-        ADD
-      </button>
+      <button className="btn btn-active btn-accent" onClick={handleChange}>Add Category</button>
       <input
         type="checkbox"
         checked={modal}

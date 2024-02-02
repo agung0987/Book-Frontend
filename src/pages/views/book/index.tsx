@@ -2,30 +2,41 @@ import { BooksType } from "@/types/books.type";
 import AddBookView from "./addBook";
 import UpdateBookView from "./updateCategory";
 import DeleteBookView from "./deleteBook";
+import { useEffect } from "react";
+import { useBook } from "@/store/book/crudBook";
 
-const BooksView = ({ books }: { books: BooksType[] }) => {
+const BooksView = () => {
+  const { books, fetchData } = useBook();
+  useEffect(() => {
+    const fetchDataFromApi = async () => {
+      await fetchData();
+    };
+    fetchDataFromApi();
+  }, []);
   return (
     <div>
+      <div className="flex justify-end mt-20 mx-44 overflow-x-auto">
       <AddBookView />
-      <div className="flex justify-center mt-20  mx-64 overflow-x-auto">
+      </div>
+      <div className="flex justify-center mt-1  mx-44 overflow-x-auto">
         <table className="table table-zebra ">
           <thead>
             <tr>
-              <th className="border border-slate-600 text-black">Title</th>
-              <th className="border border-slate-600 text-black">
+              <th className="border border-slate-600 bg-sky-100  text-black text-base">Title</th>
+              <th className="border border-slate-600 bg-sky-100  text-black text-base">
                 Description
               </th>
-              <th className="border border-slate-600 text-black">Image</th>
-              <th className="border border-slate-600 text-black">
+              <th className="border border-slate-600 bg-sky-100  text-black text-base">Image</th>
+              <th className="border border-slate-600 bg-sky-100  text-black text-base">
                 Release Year
               </th>
-              <th className="border border-slate-600 text-black">Price</th>
-              <th className="border border-slate-600 text-black">Total Page</th>
-              <th className="border border-slate-600 text-black">Thickness</th>
-              <th className="border border-slate-600 text-black">
+              <th className="border border-slate-600 bg-sky-100  text-black text-base">Price</th>
+              <th className="border border-slate-600 bg-sky-100  text-black text-base">Total Page</th>
+              <th className="border border-slate-600 bg-sky-100  text-black text-base">Thickness</th>
+              <th className="border border-slate-600 bg-sky-100  text-black text-base">
                 Category
               </th>
-              <th className="border border-slate-600 text-black">
+              <th className="border border-slate-600 bg-sky-100  text-black text-base">
                 Action
               </th>
             </tr>
@@ -57,11 +68,13 @@ const BooksView = ({ books }: { books: BooksType[] }) => {
                 <td className="border border-slate-700 text-black">
                   {book.category.name}
                 </td>
-                <td>
-                  <div className="mr-0">
+                <td className="flex space-x-2">
+                  <div className="flex">
                     <UpdateBookView book={book}/>
                   </div>
+                  <div className="flex">
                   <DeleteBookView book={book}/>
+                  </div>
                 </td>
               </tr>
             ))}

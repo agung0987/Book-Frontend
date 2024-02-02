@@ -1,34 +1,48 @@
 import { CategoryType } from "@/types/category.type";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState } from "react";
 import AddCategoryView from "./addCategory";
 import DeleteCategoryView from "./deleteCategory";
 import UpdateCategoryView from "./updateCategory";
+import  { useCategories }  from "@/store/categorys/crud";
+import { useEffect } from "react";
 
-const CategoryView = ({ category }: { category: CategoryType[] }) => {
+const CategoryView = () => {
+  const { categories, fetchData } = useCategories();
+  useEffect(() => {
+    const fetchDataFromApi = async () => {
+      await fetchData();
+    };
+    fetchDataFromApi();
+  }, []);
   return (
     <div>
-      <AddCategoryView />
-      <div className="flex justify-center mt-20  mx-64 overflow-x-auto">
+      <div className="flex justify-end mt-20 mx-44 overflow-x-auto">
+        <AddCategoryView />
+      </div>
+      <div className="flex justify-center mx-44 mt-1 overflow-x-auto">
         <table className="table table-zebra ">
           <thead>
             <tr>
-              <th className="border border-slate-600 text-black">Name</th>
-              <th className="border border-slate-600 text-black">Action</th>
+              <th className="border border-slate-600 bg-sky-100  text-black text-base">
+                Name
+              </th>
+              <th className="border border-slate-600 bg-sky-100 text-black text-base">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
-            {category.map((category: CategoryType, i: number) => (
+            {categories.map((category: CategoryType, i: number) => (
               <tr key={i} className="border border-slate-700">
                 <td className="border border-slate-700 text-black">
                   {category.name}
                 </td>
-                <td>
-                  <div className="mr-0">
+                <td className="flex space-x-2">
+                  <div className="flex">
                     <UpdateCategoryView category={category} />
                   </div>
-                  <DeleteCategoryView category={category} />
+                  <div className="flex">
+                    <DeleteCategoryView category={category} />
+                  </div>
                 </td>
               </tr>
             ))}

@@ -1,32 +1,27 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CategoryType } from "@/types/category.type";
+import { useBook } from "@/store/book/crudBook";
+import { useCategories } from "@/store/categorys/crud";
 
 const AddBookView = () => {
-  const [options, setOptions] = useState([]);
+  const { categories, fetchData } = useCategories();
+  const {addData} = useBook();
   const [selectedOption, setSelectedOption] = useState();
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    setTimeout(() => {fetchOptions();}, 3000);
+    const fetchDataFromApi = async () => {
+      await fetchData();
+    };
+    fetchDataFromApi();
   }, []);
-
-  const fetchOptions = async () => {
-    try {
-      const response = await fetch(
-        "http://127.0.0.1:3000/api/categories"
-      ); 
-      const data = await response.json();
-      setOptions(data.data);
-    } catch (error) {
-      console.error("Error fetching options:", error);
-    }
-  };
-  const handleOptionChange = (event :any) => {
+  
+  const handleOptionChange = (event: any) => {
     const selectedValue = event.target.value;
-    setSelectedOption(selectedValue); 
+    setSelectedOption(selectedValue);
   };
 
   const handleSubmit = async (event: any) => {
@@ -42,20 +37,16 @@ const AddBookView = () => {
       total_page: event.target.total_page.value,
       category_id: event.target.category_id.value,
     };
-
-    const result = await fetch("http://127.0.0.1:3000/api/books", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (result.status === 200) {
-      setIsMutating(false);
+    try {
+      await addData(data);
+    } catch (error) {
+      console.error('Error adding data:', error);
+    }
+    setIsMutating(false);
       event.target.reset();
       router.refresh();
       setModal(false);
-    }
+
   };
 
   function handleChange() {
@@ -63,8 +54,8 @@ const AddBookView = () => {
   }
   return (
     <div>
-      <button className="btn" onClick={handleChange}>
-        Add
+      <button className="btn btn-active btn-accent" onClick={handleChange}>
+        Add Book
       </button>
       <input
         type="checkbox"
@@ -182,17 +173,17 @@ const AddBookView = () => {
                 className="select select-bordered w-full "
                 id="category_id"
                 name="category_id "
-                value={selectedOption} 
+                value={selectedOption}
                 onChange={handleOptionChange}
               >
                 <option disabled selected>
                   Pilih Category
                 </option>
-                {options.map((option : CategoryType) => (
-                <option key={option.id} value={option.id}>
-                  {option.name}
-                </option>
-              ))}
+                {categories.map((option: CategoryType) => (
+                  <option key={option.id} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="flex items-center justify-between">
