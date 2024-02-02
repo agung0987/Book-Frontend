@@ -2,27 +2,18 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Router from "next/router";
 import Cookies from "js-cookie";
+import { useAuth } from "@/store/auth/authState";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [validation, setValidation] = useState([]);
+  const {login} = useAuth();
   const loginHandler = async (e: any) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
-
-    await axios
-      .post(`http://127.0.0.1:3000/api/login`, formData)
-      .then((response) => {
-        Cookies.set("token", response.data.token);
-
-        Router.push("/categorys");
-      })
-      .catch((error: any) => {
-        setValidation(error.response.data);
-      });
+     await login(formData)
   };
 
   //hook useEffect

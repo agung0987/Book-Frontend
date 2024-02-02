@@ -8,6 +8,7 @@ interface Categorys {
   addData: (data: any) => Promise<void>; 
   updateData: (id: number, updatedData: any) => Promise<void>; 
   deleteData: (id: number) => Promise<void>;
+  ShowBookData: (id: number) => Promise<void>;
 }
 
 export const useCategories = create<Categorys>((set) => ({
@@ -53,6 +54,15 @@ export const useCategories = create<Categorys>((set) => ({
     try {
       await axios.delete(`http://127.0.0.1:3000/api/categories/${id}`);
       set((state) => ({ categories: state.categories.filter((item) => item.id !== id) }));
+    } catch (error) {
+      console.error('Error deleting data:', error);
+    }
+  },
+  ShowBookData: async (id) => {
+    try {
+      await axios.get(`http://127.0.0.1:3000/api/categories/${id}/books`);
+      set((state) => ({ categories: state.categories.filter((item) => item.id !== id)  }));
+      
     } catch (error) {
       console.error('Error deleting data:', error);
     }

@@ -2,8 +2,10 @@ import { CategoryType } from "@/types/category.type";
 import AddCategoryView from "./addCategory";
 import DeleteCategoryView from "./deleteCategory";
 import UpdateCategoryView from "./updateCategory";
-import  { useCategories }  from "@/store/categorys/crud";
+import { useCategories } from "@/store/categorys/crud";
 import { useEffect } from "react";
+import CategoryIdBook from "@/pages/categorys/[CategoryIdBook]";
+import Link from "next/link";
 
 const CategoryView = () => {
   const { categories, fetchData } = useCategories();
@@ -42,6 +44,11 @@ const CategoryView = () => {
                   </div>
                   <div className="flex">
                     <DeleteCategoryView category={category} />
+                  </div>
+                  <div className="flex">
+                    <Link href={`/categorys/${category.id}`}>
+                      details
+                    </Link>
                   </div>
                 </td>
               </tr>

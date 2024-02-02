@@ -1,16 +1,17 @@
 import Link from "next/link";
 import Cookies from "js-cookie";
-import axios from "axios";
-import Router from "next/router";
+import { useAuth } from "@/store/auth/authState";
+
 
 const Navbar = () => {
-  const logoutHanlder = async () => {
-    const token = Cookies.get('token');
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    await axios.post(`http://127.0.0.1:3000/api/logout`).then(() => {
-      Cookies.remove("token");
-      Router.push("/");
-    });
+  const {logout} = useAuth();
+  const logoutHanlder = async () => {   
+    try {
+      const token = Cookies.get("token");
+      await logout(token);
+    } catch (error) {
+      console.error('Error adding data:', error);
+    }
   };
 
   return (
